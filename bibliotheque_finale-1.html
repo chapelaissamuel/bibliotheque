@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#E8734A">
+<title>📚 Bibliothèque de Perrine v3</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFFBF5;--tx:#3D2C2C;--tl:#8B7676;--ac:#E8734A;--c2:#2E86C1;--c3:#8E44AD;--sh:0 2px 12px rgba(61,44,44,.07)}*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}body{font-family:'Quicksand',sans-serif;background:var(--bg);color:var(--tx);max-width:540px;margin:0 auto;min-height:100vh}button{font-family:inherit;cursor:pointer;border:none}h1,h2,h3{font-family:'Baloo 2',cursive}a{color:inherit;text-decoration:none}
+.hdr{background:linear-gradient(135deg,#E8734A,#F4A261);padding:16px 18px 12px;color:#fff;position:sticky;top:0;z-index:100;box-shadow:0 4px 20px rgba(232,115,74,.3)}.hdr.c2{background:linear-gradient(135deg,#2E86C1,#5DADE2)}.hdr.c3{background:linear-gradient(135deg,#8E44AD,#BB8FCE)}
+.hdr h1{font-size:1.3rem;font-weight:800}.hdr p{font-size:.8rem;opacity:.85;font-weight:600;margin-top:2px}
+.bk{background:rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:7px 14px;font-size:.82rem;font-weight:700;margin-bottom:5px;display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.bd{display:inline-block;padding:2px 9px;border-radius:20px;font-size:.63rem;font-weight:700;color:#fff;text-transform:uppercase}
+.tabs{display:flex;padding:0;position:sticky;top:58px;z-index:99;background:var(--bg);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.tab{flex:1;padding:10px 0;text-align:center;font-size:.72rem;font-weight:700;border-bottom:3px solid transparent;color:var(--tl);transition:all .15s}
+.tab.on{color:var(--ac);border-bottom-color:var(--ac)}.tab.c2on{color:var(--c2);border-bottom-color:var(--c2)}.tab.c3on{color:var(--c3);border-bottom-color:var(--c3)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:10px 14px 40px}
+.ac{background:#fff;border-radius:18px;padding:18px 10px 14px;text-align:center;box-shadow:var(--sh);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;transition:transform .12s}.ac:active{transform:scale(.97)}.ac .em{font-size:3rem}.ac h3{font-size:.8rem;font-weight:700;line-height:1.2}.ac .au{font-size:.66rem;color:var(--tl);font-weight:600}
+.si{width:100%;padding:12px 14px 12px 40px;border-radius:14px;border:2px solid rgba(0,0,0,.05);background:#fff;font-size:.9rem;font-weight:600;outline:none;box-shadow:var(--sh)}.si:focus{border-color:var(--ac)}
+.chs{display:flex;gap:7px;padding:6px 14px;overflow-x:auto;scrollbar-width:none}.chs::-webkit-scrollbar{display:none}
+.ch{flex-shrink:0;padding:7px 14px;border-radius:18px;font-size:.76rem;font-weight:700;white-space:nowrap}.ch.on{background:var(--ac);color:#fff;box-shadow:0 2px 8px rgba(232,115,74,.3)}.ch.off{background:#fff;color:var(--tx);box-shadow:var(--sh)}
+.hr{text-align:center;padding:20px 14px 8px}.hr .em{font-size:4rem;display:block}.hr h2{font-size:1.15rem;font-weight:800;margin-top:8px}
+.ct{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--tl);padding:14px 14px 5px}
+.dl{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:0 14px 10px}
+.dc{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--sh);transition:transform .12s;display:block}.dc:active{transform:scale(.97)}
+.dc img{width:100%;aspect-ratio:210/297;object-fit:cover;display:block;border-bottom:1px solid rgba(0,0,0,.05)}
+.dc .nt{width:100%;aspect-ratio:210/297;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;background:linear-gradient(135deg,#f8f4f0,#f0ebe4);border-bottom:1px solid rgba(0,0,0,.05)}.dc .nt span:first-child{font-size:3rem}.dc .nt .lb{font-size:.65rem;font-weight:700;color:var(--tl);padding:0 6px;text-align:center;line-height:1.2}
+.dc .nf{padding:8px 10px}.dc h3{font-size:.72rem;font-weight:700;line-height:1.2}.dc .sb{font-size:.62rem;color:var(--ac);font-weight:800;margin-top:2px}
+.lnk{display:block;margin:10px 14px;padding:14px;background:#fff;border-radius:14px;box-shadow:var(--sh);text-align:center;font-size:.82rem;font-weight:700;color:var(--ac)}.lnk:active{transform:scale(.98)}
+.cxcard{background:#fff;border-radius:16px;padding:16px;box-shadow:var(--sh);cursor:pointer;display:flex;gap:14px;align-items:center;transition:transform .12s}.cxcard:active{transform:scale(.98)}
+.cxcard .ico{font-size:2.2rem;flex-shrink:0}
+.cxcard h3{font-size:.88rem;font-weight:700;line-height:1.2}
+.cxcard .desc{font-size:.7rem;color:var(--tl);font-weight:600;margin-top:3px;line-height:1.3}
+.cxcard .go{margin-left:auto;flex-shrink:0;font-size:.75rem;font-weight:800}
+.cxlist{display:flex;flex-direction:column;gap:10px;padding:0 14px 12px}
+/* ── Dark mode ─────────────────────────────────────────────────── */
+body.dm{--bg:#1A1512;--tx:#F0E8DF;--tl:#9A8878;--sh:0 2px 12px rgba(0,0,0,.35)}
+body.dm .ac,body.dm .dc,body.dm .si,body.dm .lnk,body.dm .ch.off{background:#2A2018}
+body.dm .tabs{background:#1A1512}
+body.dm .dc .nt{background:linear-gradient(135deg,#2A2018,#231C14)}
+body.dm .modal{background:#1A1512}
+body.dm .mrow{border-bottom-color:rgba(255,255,255,.07)}
+body{transition:background .2s,color .2s}
+/* ── Header row with actions ──────────────────────────────────── */
+.hdr-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.hdr-acts{display:flex;gap:6px;flex-shrink:0;padding-top:2px}
+.ico-btn{background:rgba(255,255,255,.2);border:none;color:#fff;border-radius:10px;width:34px;height:34px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s}.ico-btn:active{background:rgba(255,255,255,.35)}
+/* ── Favorites star on cards ──────────────────────────────────── */
+.ac .fav-btn{position:absolute;top:8px;right:8px;font-size:1rem;background:none;border:none;opacity:.3;transition:opacity .15s,transform .15s;cursor:pointer;padding:2px}.ac .fav-btn.on{opacity:1}.ac .fav-btn:active{transform:scale(1.3)}
+/* ── Progress bar on cards ────────────────────────────────────── */
+.ac .prog{width:calc(100% - 20px);height:4px;background:rgba(0,0,0,.08);border-radius:4px;margin-top:4px;overflow:hidden}.ac .prog-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#27AE60,#2ECC71);transition:width .3s}
+body.dm .ac .prog{background:rgba(255,255,255,.1)}
+/* ── Period badge on cards ────────────────────────────────────── */
+.period-badge{position:absolute;top:8px;left:8px;font-size:.58rem;font-weight:800;background:linear-gradient(135deg,#F39C12,#E67E22);color:#fff;padding:2px 6px;border-radius:8px;pointer-events:none}
+/* ── Check mark on doc cards ──────────────────────────────────── */
+.dc{position:relative}
+.dc .ck{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.9);background:rgba(255,255,255,.6);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .15s;z-index:2;line-height:1;padding:0}.dc .ck.done{background:#27AE60;border-color:#27AE60;color:#fff}.dc .ck:active{transform:scale(1.2)}
+/* ── Settings modal ───────────────────────────────────────────── */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--bg);border-radius:20px 20px 0 0;padding:24px 20px 44px;width:100%;max-width:540px;max-height:85vh;overflow-y:auto}
+.modal h2{font-size:1.1rem;font-weight:800;margin-bottom:16px}
+.mrow{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid rgba(0,0,0,.06);gap:12px}
+.mlabel{font-size:.87rem;font-weight:700}.msub{font-size:.72rem;color:var(--tl);margin-top:3px}
+.toggle{width:46px;height:27px;border-radius:14px;background:#DDD;position:relative;cursor:pointer;flex-shrink:0;transition:background .2s}
+.toggle.on{background:#27AE60}.toggle::after{content:'';position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}.toggle.on::after{transform:translateX(19px)}
+.pchips{display:flex;flex-wrap:wrap;gap:8px}
+.pchip{padding:8px 14px;border-radius:16px;font-size:.78rem;font-weight:700;cursor:pointer;border:2px solid transparent;transition:all .15s}
+/* ── Tabs extended ────────────────────────────────────────────── */
+.tab.on{color:var(--ac);border-bottom-color:var(--ac)}
+
+/* === MODULE IA - Bibliotheque de Perrine === */
+.ai-screen{padding:0 14px 80px}
+.ai-hdr-block{background:linear-gradient(135deg,rgba(232,115,74,.12),rgba(244,162,97,.07));border:1px solid rgba(232,115,74,.3);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+.ai-hdr-block h2{font-family:'Baloo 2',cursive;font-size:1.25rem;font-weight:800;color:var(--ac);margin-bottom:2px}
+.ai-hdr-block p{font-size:.72rem;color:var(--tl);font-weight:600}
+.ai-ctx-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.ai-ctx-btn{padding:6px 13px;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:20px;font-family:'Quicksand',sans-serif;font-size:.68rem;font-weight:700;color:var(--tl);cursor:pointer;transition:all .2s;box-shadow:var(--sh)}
+.ai-ctx-btn.on{background:var(--ac);border-color:var(--ac);color:#fff;box-shadow:0 2px 8px rgba(232,115,74,.3)}
+body.dm .ai-ctx-btn{background:#2A2018;border-color:rgba(255,255,255,.08);color:var(--tl)}
+body.dm .ai-ctx-btn.on{background:var(--ac);color:#fff}
+.ai-messages{background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:16px;padding:14px;height:calc(100vh - 370px);min-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:10px}
+body.dm .ai-messages{background:#2A2018;border-color:rgba(255,255,255,.06)}
+.ai-msg{max-width:92%;animation:aiIn .2s ease}
+@keyframes aiIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.ai-msg.user{align-self:flex-end}
+.ai-msg.assistant{align-self:flex-start}
+.ai-bubble-user{background:linear-gradient(135deg,rgba(232,115,74,.18),rgba(244,162,97,.12));border:1px solid rgba(232,115,74,.3);border-radius:16px 16px 4px 16px;padding:10px 14px;font-size:.85rem;color:var(--tx);line-height:1.6}
+.ai-bubble-assistant{background:var(--bg);border:1px solid rgba(0,0,0,.07);border-radius:16px 16px 16px 4px;padding:10px 14px;font-size:.85rem;color:var(--tx);line-height:1.7}
+body.dm .ai-bubble-assistant{background:#1A1512;border-color:rgba(255,255,255,.07)}
+.ai-bubble-assistant strong{color:var(--ac)}
+.ai-bubble-assistant code{background:rgba(232,115,74,.1);border:1px solid rgba(232,115,74,.2);border-radius:4px;padding:1px 6px;font-size:.8rem;color:#c0392b}
+.ai-bubble-assistant ul{padding-left:16px;margin:5px 0}
+.ai-bubble-assistant li{margin-bottom:3px}
+.ai-meta{font-size:.6rem;color:var(--tl);margin-top:3px;font-weight:600}
+.ai-meta.r{text-align:right}
+.ai-thinking{align-self:flex-start;display:flex;gap:5px;padding:10px 14px;background:var(--bg);border:1px solid rgba(0,0,0,.07);border-radius:16px 16px 16px 4px}
+body.dm .ai-thinking{background:#1A1512;border-color:rgba(255,255,255,.07)}
+.ai-thinking span{width:7px;height:7px;background:var(--ac);border-radius:50%;animation:aiDot 1.2s infinite}
+.ai-thinking span:nth-child(2){animation-delay:.2s}
+.ai-thinking span:nth-child(3){animation-delay:.4s}
+@keyframes aiDot{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+.ai-empty{text-align:center;padding:36px 20px;color:var(--tl)}
+.ai-empty .ai-ei{font-size:3rem;display:block;opacity:.35;margin-bottom:10px}
+.ai-empty p{font-size:.8rem;line-height:1.7;font-weight:600}
+.ai-quick-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.ai-quick-btn{padding:5px 12px;background:rgba(232,115,74,.08);border:1px solid rgba(232,115,74,.22);border-radius:20px;font-size:.65rem;font-weight:700;color:var(--ac);cursor:pointer;transition:all .15s;white-space:nowrap}
+.ai-quick-btn:active{background:rgba(232,115,74,.2)}
+.ai-input-row{display:flex;gap:8px;align-items:flex-end}
+.ai-input{width:100%;padding:12px 14px;background:#fff;border:2px solid rgba(232,115,74,.25);border-radius:12px;color:var(--tx);font-family:'Quicksand',sans-serif;font-size:.88rem;font-weight:600;outline:none;resize:none;line-height:1.5;min-height:48px;max-height:120px;transition:border-color .2s;box-shadow:var(--sh)}
+.ai-input:focus{border-color:var(--ac)}
+.ai-input::placeholder{color:var(--tl)}
+body.dm .ai-input{background:#2A2018;border-color:rgba(232,115,74,.2);color:var(--tx)}
+.ai-send{width:48px;height:48px;background:linear-gradient(135deg,#E8734A,#F4A261);border:none;border-radius:12px;color:#fff;font-size:1.1rem;cursor:pointer;transition:all .2s;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(232,115,74,.35)}
+.ai-send:hover{transform:scale(1.05)}
+.ai-send:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.ai-footer{display:flex;gap:8px;margin-top:8px;align-items:center}
+.ai-usage{font-size:.62rem;color:var(--tl);font-weight:700;flex:1}
+.ai-clear{padding:5px 12px;background:transparent;border:1px solid rgba(0,0,0,.08);border-radius:8px;color:var(--tl);font-family:'Quicksand',sans-serif;font-size:.65rem;font-weight:700;cursor:pointer;transition:all .15s}
+.ai-clear:hover{border-color:#E74C3C;color:#E74C3C}
+
+/* === MODALE MOT DE PASSE IA === */
+.ai-pwd-modal{position:fixed;inset:0;background:rgba(61,44,44,.6);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px}
+.ai-pwd-box{background:var(--bg);border-radius:20px;padding:28px 24px;width:100%;max-width:340px;box-shadow:0 8px 40px rgba(0,0,0,.2);text-align:center}
+.ai-pwd-box h3{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:var(--ac);margin-bottom:6px}
+.ai-pwd-box p{font-size:.78rem;color:var(--tl);font-weight:600;margin-bottom:18px;line-height:1.5}
+.ai-pwd-input{width:100%;padding:12px 16px;border:2px solid rgba(232,115,74,.3);border-radius:12px;font-family:'Quicksand',sans-serif;font-size:1rem;font-weight:700;text-align:center;letter-spacing:.15em;outline:none;background:#fff;color:var(--tx);transition:border-color .2s}
+.ai-pwd-input:focus{border-color:var(--ac)}
+body.dm .ai-pwd-input{background:#2A2018;color:var(--tx)}
+.ai-pwd-err{font-size:.72rem;color:#E74C3C;font-weight:700;margin-top:8px;min-height:18px}
+.ai-pwd-btn{margin-top:14px;width:100%;padding:12px;background:linear-gradient(135deg,#E8734A,#F4A261);border:none;border-radius:12px;color:#fff;font-family:'Quicksand',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(232,115,74,.35)}
+.ai-pwd-btn:active{transform:scale(.98)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const AL=[{"id": "jadore", "title": "J'adore l'école", "author": "Tracey Corderoy & Tim Warnes", "themes": ["rentrée"], "levels": ["PS", "MS", "GS"], "emoji": "🦏", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/09/", "page": "https://maitresselunicole.fr/2023/09/03/exploitation-dalbum-jadore-lecole/", "prefix": ["jadore", "jadorelecole"], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-jadore-lecole.pdf"}, {"l": "🧩 Puzzle 4 pièces", "c": "puzzle", "f": "puzzle-couverture-album-jadore-lecole-4-pieces.pdf"}, {"l": "🧩 Puzzle 6 pièces", "c": "puzzle", "f": "puzzle-couverture-album-jadore-lecole-6-pieces.pdf"}, {"l": "🧩 Puzzle 9 pièces", "c": "puzzle", "f": "puzzle-couverture-album-jadore-lecole-9-pieces.pdf"}, {"l": "⭐ Constellation 1→2", "c": "numération", "f": "colle-la-constellation-qui-correspond-jadore-lecole-1-2.pdf"}, {"l": "⭐ Constellation 1→3", "c": "numération", "f": "colle-la-constellation-qui-correspond-jadore-lecole-1-3.pdf"}, {"l": "⭐ Constellation 1→5", "c": "numération", "f": "colle-la-constellation-qui-correspond-jadore-lecole-1-5.pdf"}, {"l": "🔢 Chiffre 1→2", "c": "numération", "f": "colle-le-chiffre-qui-correspond-jadore-lecole-1-2.pdf"}, {"l": "🔢 Chiffre 1→3", "c": "numération", "f": "colle-le-chiffre-qui-correspond-jadore-lecole-1-3.pdf"}, {"l": "🔢 Chiffre 1→4", "c": "numération", "f": "colle-le-chiffre-qui-correspond-jadore-lecole-1-4.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-jadore-lecole-1-5.pdf"}, {"l": "✏️ Écris 1→9", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-jadore-lecole-1-9.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-jadore-lecole-lettres.pdf"}, {"l": "✍️ Titre — capitales", "c": "titre", "f": "titre-a-reecrire-jadore-lecole-capitales.pdf"}, {"l": "✍️ Titre — cursives", "c": "titre", "f": "titre-a-reecrire-jadore-lecole-cursives.pdf"}, {"l": "🔠 Mots — capitales", "c": "mots", "f": "mots-a-reformer-jadore-lecole-capitales.pdf"}, {"l": "🔡 Mots — scriptes", "c": "mots", "f": "mots-a-reformer-jadore-lecole-scriptes.pdf"}, {"l": "🖼️ Images de l'album", "c": "images", "f": "images-de-lalbum-jadore-lecole.pdf"}]}, {"id": "jeveux", "title": "Je veux pas aller à l'école", "author": "Stephanie Blake", "themes": ["rentrée"], "levels": ["PS", "MS", "GS"], "emoji": "🐰", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/08/", "page": "https://maitresselunicole.fr/2023/08/22/exploitation-dalbum-je-veux-pas-aller-a-lecole/", "prefix": ["jeveuxpasalleralecole", "lapinssimon", "boiteacompterlapin"], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-je-veux-pas-aller-a-lecole.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-je-veux-pas-aller-a-lecole-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-je-veux-pas-aller-a-lecole-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-je-veux-pas-aller-a-lecole-9-pieces.pdf"}, {"l": "⭐ Constellation 1→2", "c": "numération", "f": "colle-la-constellation-qui-correspond-je-veux-pas-aller-a-lecole-1-2.pdf"}, {"l": "⭐ Constellation 1→3", "c": "numération", "f": "colle-la-constellation-qui-correspond-je-veux-pas-aller-a-lecole-1-3.pdf"}, {"l": "🔢 Chiffre 1→3", "c": "numération", "f": "colle-le-chiffre-qui-correspond-je-veux-pas-aller-a-lecole-1-3.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-je-veux-pas-aller-a-lecole-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-je-veux-pas-aller-a-lecole-1-9.pdf"}, {"l": "✏️ Écris 1→9", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-je-veux-pas-aller-a-lecole-1-9.pdf"}, {"l": "✏️ Écris 1→19", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-je-veux-pas-aller-a-lecole-1-19.pdf"}, {"l": "📦 Boîte compter chiffres", "c": "numération", "f": "boite-a-compter-lapins-chiffres.pdf"}, {"l": "📦 Boîte compter constellations", "c": "numération", "f": "boite-a-compter-lapins-constellations.pdf"}, {"l": "🐰 Lapins à dénombrer", "c": "numération", "f": "lapins-simon-a-denombrer.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-je-veux-pas-aller-a-lecole-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-je-veux-pas-aller-a-lecole-mots.pdf"}, {"l": "✍️ Titre — capitales", "c": "titre", "f": "titre-a-reecrire-je-veux-pas-aller-a-lecole-capitales.pdf"}, {"l": "✍️ Titre — cursives", "c": "titre", "f": "titre-a-reecrire-je-veux-pas-aller-a-lecole-cursives.pdf"}, {"l": "🔡 Mots — scriptes", "c": "mots", "f": "mots-a-reformer-je-veux-pas-aller-a-lecole-scriptes.pdf"}, {"l": "✍️ Écriture — capitales", "c": "mots", "f": "supports-ecriture-mots-je-veux-pas-aller-a-lecole-capitales.pdf"}, {"l": "✍️ Écriture — cursives", "c": "mots", "f": "supports-ecriture-mots-je-veux-pas-aller-a-lecole-cursives.pdf"}, {"l": "🖼️ Images de l'album", "c": "images", "f": "images-de-lalbum-je-veux-pas-aller-a-lecole.pdf"}]}, {"id": "plb", "title": "Petit Lapin Blanc à la maternelle", "author": "Marie-France Floury", "themes": ["rentrée"], "levels": ["PS", "MS"], "emoji": "🐇", "base": "https://maitresselunicole.fr/wp-content/uploads/2024/08/", "page": "https://maitresselunicole.fr/2024/08/31/exploitation-dalbum-petit-lapin-blanc-a-la-maternelle/", "prefix": ["petitlapinblancalamaternelle"], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-petit-lapin-blanc-a-la-maternelle.pdf"}, {"l": "🎨 Coloriage", "c": "images", "f": "coloriage-petit-lapin-blanc-a-la-maternelle.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-petit-lapin-blanc-a-la-maternelle-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-petit-lapin-blanc-a-la-maternelle-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-petit-lapin-blanc-a-la-maternelle-9-pieces.pdf"}, {"l": "⭐ Constellation 1→2", "c": "numération", "f": "colle-la-constellation-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-2.pdf"}, {"l": "⭐ Constellation 1→3", "c": "numération", "f": "colle-la-constellation-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-3.pdf"}, {"l": "⭐ Constellation 1→4", "c": "numération", "f": "colle-la-constellation-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-4.pdf"}, {"l": "⭐ Constellation 1→5", "c": "numération", "f": "colle-la-constellation-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-5.pdf"}, {"l": "🔢 Chiffre 1→2", "c": "numération", "f": "colle-le-chiffre-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-2.pdf"}, {"l": "🔢 Chiffre 1→3", "c": "numération", "f": "colle-le-chiffre-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-3.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-petit-lapin-blanc-a-la-maternelle-1-9.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-petit-lapin-blanc-a-la-maternelle-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-petit-lapin-blanc-a-la-maternelle-mots.pdf"}, {"l": "✍️ Titre — capitales", "c": "titre", "f": "titre-a-reecrire-petit-lapin-blanc-a-la-maternelle-capitales.pdf"}, {"l": "✍️ Titre — cursives", "c": "titre", "f": "titre-a-reecrire-petit-lapin-blanc-a-la-maternelle-cursives.pdf"}, {"l": "🖼️ Images de l'album", "c": "images", "f": "images-de-lalbum-petit-lapin-blanc-a-la-maternelle.pdf"}]}, {"id": "danslacour", "title": "Dans la cour de l'école", "author": "Christophe Loupy", "themes": ["rentrée"], "levels": ["PS", "MS", "GS"], "emoji": "⭕", "base": "https://maitresselunicole.fr/wp-content/uploads/2022/09/", "page": "https://maitresselunicole.fr/2022/09/18/exploitation-dalbum-dans-la-cour-de-lecole-ed-2021/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-dans-la-cour-de-lecole.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-dans-la-cour-de-lecole-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-dans-la-cour-de-lecole-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-dans-la-cour-de-lecole-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "dans-la-cour-de-lecole-a-reformer-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "dans-la-cour-de-lecole-a-reformer-mots.pdf"}, {"l": "🔢 Chiffre 1→3", "c": "numération", "f": "colle-le-chiffre-qui-correspond-1-3.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-1-5.pdf"}, {"l": "🖼️ Images vocabulaire", "c": "images", "f": "images-vocabulaire-dans-la-cour-de-lecole.pdf"}]}, {"id": "nonnon", "title": "Non, non et non !", "author": "Mireille d'Allancé", "themes": ["rentrée"], "levels": ["PS", "MS", "GS"], "emoji": "🐻", "base": "https://maitresselunicole.fr/wp-content/uploads/2024/08/", "page": "https://maitresselunicole.fr/2024/08/23/exploitation-dalbum-non-non-et-non/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-non-non-et-non.pdf"}, {"l": "🎨 Coloriage Octave", "c": "images", "f": "coloriage-non-non-et-non.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-non-non-et-non-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-non-non-et-non-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-non-non-et-non-9-pieces.pdf"}, {"l": "⭐ Constellation 1→2", "c": "numération", "f": "colle-la-constellation-qui-correspond-non-non-et-non-1-2.pdf"}, {"l": "⭐ Constellation 1→3", "c": "numération", "f": "colle-la-constellation-qui-correspond-non-non-et-non-1-3.pdf"}, {"l": "⭐ Constellation 1→5", "c": "numération", "f": "colle-la-constellation-qui-correspond-non-non-et-non-1-5.pdf"}, {"l": "🔢 Chiffre 1→3", "c": "numération", "f": "colle-le-chiffre-qui-correspond-non-non-et-non-1-3.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-non-non-et-non-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-non-non-et-non-1-9.pdf"}, {"l": "✏️ Écris 1→9", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-non-non-et-non-1-9.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-non-non-et-non-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-non-non-et-non-mots.pdf"}, {"l": "🖼️ Images de l'album", "c": "images", "f": "images-de-lalbum-non-non-et-non.pdf"}]}, {"id": "course", "title": "La course à la pomme", "author": "Christina Dorner & Cécile Hudrisier", "themes": ["automne"], "levels": ["PS", "MS"], "emoji": "🍎", "base": "https://maitresselunicole.fr/wp-content/uploads/2022/10/", "page": "https://maitresselunicole.fr/2022/10/25/exploitation-dalbum-la-course-a-la-pomme/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-la-course-a-la-pomme.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-la-course-a-la-pomme-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-la-course-a-la-pomme-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-la-course-a-la-pomme-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-la-course-a-la-pomme-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-la-course-a-la-pomme-mots.pdf"}, {"l": "🖼️ Images de l'album", "c": "images", "f": "images-de-lalbum-la-course-a-la-pomme.pdf"}]}, {"id": "trognon", "title": "Trognon et Pépin", "author": "Bénédicte Guettier", "themes": ["automne"], "levels": ["PS", "MS", "GS"], "emoji": "🍏", "base": "https://maitresselunicole.fr/wp-content/uploads/2022/10/", "page": "https://maitresselunicole.fr/2022/10/05/exploitation-dalbum-trognon-et-pepin/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-trognon-et-pepin.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-trognon-et-pepin-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-trognon-et-pepin-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-trognon-et-pepin-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-trognon-et-pepin-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-trognon-et-pepin-mots.pdf"}]}, {"id": "vent", "title": "Le vent m'a pris", "author": "Rascal", "themes": ["automne"], "levels": ["PS", "MS", "GS"], "emoji": "💨", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/10/", "page": "https://maitresselunicole.fr/2023/10/24/exploitation-dalbum-le-vent-ma-pris/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-le-vent-ma-pris.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-le-vent-ma-pris-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-le-vent-ma-pris-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-le-vent-ma-pris-9-pieces.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-vent-ma-pris-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-vent-ma-pris-1-9.pdf"}, {"l": "✏️ Écris 1→19", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-le-vent-ma-pris-1-19.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-le-vent-ma-pris-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-le-vent-ma-pris-mots.pdf"}]}, {"id": "voleur", "title": "Le voleur de feuilles", "author": "Alice Hemming & Nicola Slater", "themes": ["automne"], "levels": ["PS", "MS", "GS"], "emoji": "🍂", "base": "https://maitresselunicole.fr/wp-content/uploads/2024/09/", "page": "https://maitresselunicole.fr/2024/09/22/exploitation-dalbum-le-voleur-de-feuilles/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-le-voleur-de-feuilles.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-le-voleur-de-feuilles-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-le-voleur-de-feuilles-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-le-voleur-de-feuilles-9-pieces.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-voleur-de-feuilles-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-voleur-de-feuilles-1-9.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-le-voleur-de-feuilles-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-le-voleur-de-feuilles-mots.pdf"}]}, {"id": "petiteoie", "title": "C'est l'automne, petite oie !", "author": "Elli Woollard & Briony May Smith", "themes": ["automne"], "levels": ["PS", "MS", "GS"], "emoji": "🪿", "base": "https://maitresselunicole.fr/wp-content/uploads/2025/09/", "page": "https://maitresselunicole.fr/2025/09/14/exploitation-dalbum-cest-lautomne-petite-oie/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-cest-lautomne-petite-oie.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-cest-lautomne-petite-oie-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-cest-lautomne-petite-oie-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-cest-lautomne-petite-oie-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-cest-lautomne-petite-oie-mots.pdf"}]}, {"id": "flaubert", "title": "La promenade de Flaubert", "author": "Antonin Louchard", "themes": ["automne"], "levels": ["PS", "MS", "GS"], "emoji": "🚶", "base": "https://maitresselunicole.fr/wp-content/uploads/2022/10/", "page": "https://maitresselunicole.fr/2022/10/30/exploitation-dalbum-la-promenade-de-flaubert/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-la-promenade-de-flaubert.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-la-promenade-de-flaubert-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-la-promenade-de-flaubert-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-la-promenade-de-flaubert-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-la-promenade-de-flaubert-mots.pdf"}]}, {"id": "herisson", "title": "Le Noël du hérisson", "author": "M. Christina Butler", "themes": ["noël"], "levels": ["PS", "MS", "GS"], "emoji": "🦔", "base": "https://maitresselunicole.fr/wp-content/uploads/2022/11/", "page": "https://maitresselunicole.fr/2022/11/13/exploitation-dalbum-le-noel-du-herisson/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-le-noel-du-herisson.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-le-noel-du-herisson-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-le-noel-du-herisson-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-le-noel-du-herisson-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-le-noel-du-herisson-mots.pdf"}]}, {"id": "sapin", "title": "Le plus beau sapin de Noël", "author": "Corinne Demas", "themes": ["noël"], "levels": ["PS", "MS", "GS"], "emoji": "🎄", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/11/", "page": "https://maitresselunicole.fr/2023/11/25/exploitation-dalbum-le-plus-beau-sapin-de-noel/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-le-plus-beau-sapin-de-noel.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-le-plus-beau-sapin-de-noel-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-le-plus-beau-sapin-de-noel-9-pieces.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-plus-beau-sapin-de-noel-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-plus-beau-sapin-de-noel-1-9.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-le-plus-beau-sapin-de-noel-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-le-plus-beau-sapin-de-noel-mots.pdf"}]}, {"id": "toitnoel", "title": "Un toit pour Noël", "author": "Rebecca Harry", "themes": ["noël"], "levels": ["PS", "MS", "GS"], "emoji": "🏠", "base": "https://maitresselunicole.fr/wp-content/uploads/2025/11/", "page": "https://maitresselunicole.fr/2025/11/15/exploitation-dalbum-un-toit-pour-noel/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-un-toit-pour-noel.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-un-toit-pour-noel-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-un-toit-pour-noel-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-un-toit-pour-noel-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-un-toit-pour-noel-mots.pdf"}]}, {"id": "moufle", "title": "La moufle", "author": "Florence Desnouveaux & Cécile Hudrisier", "themes": ["hiver"], "levels": ["PS", "MS", "GS"], "emoji": "🧤", "base": "https://maitresselunicole.fr/wp-content/uploads/2021/12/", "page": "https://maitresselunicole.fr/2021/12/19/exploitation-dalbum-la-moufle/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-la-moufle.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-la-moufle-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-la-moufle-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-la-moufle-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-la-moufle-mots.pdf"}]}, {"id": "troisours", "title": "Les trois ours", "author": "Byron Barton", "themes": ["hiver"], "levels": ["PS", "MS", "GS"], "emoji": "🐻", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/09/", "page": "https://maitresselunicole.fr/2023/09/24/exploitation-dalbum-les-trois-ours/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-les-trois-ours.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-les-trois-ours-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-les-trois-ours-9-pieces.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-les-trois-ours-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-les-trois-ours-1-9.pdf"}, {"l": "✏️ Écris 1→19", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-les-trois-ours-1-19.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-les-trois-ours-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-les-trois-ours-mots.pdf"}]}, {"id": "plouk", "title": "Plouk", "author": "Christel Desmoineaux", "themes": ["hiver"], "levels": ["PS", "MS", "GS"], "emoji": "🐧", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/01/", "page": "https://maitresselunicole.fr/2023/01/18/exploitation-dalbum-plouk/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-plouk.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-plouk-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-plouk-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-plouk-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-plouk-mots.pdf"}]}, {"id": "bonsamis", "title": "Les bons amis", "author": "Paul François & Gerda Muller", "themes": ["hiver"], "levels": ["PS", "MS", "GS"], "emoji": "🥕", "base": "https://maitresselunicole.fr/wp-content/uploads/2026/01/", "page": "https://maitresselunicole.fr/2026/01/02/exploitation-dalbum-les-bons-amis/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-les-bons-amis.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-les-bons-amis-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-les-bons-amis-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-les-bons-amis-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-les-bons-amis-mots.pdf"}]}, {"id": "calinours", "title": "Calinours se réveille", "author": "Alain Broutin & Frédéric Stehr", "themes": ["printemps"], "levels": ["PS", "MS", "GS"], "emoji": "🐻", "base": "https://maitresselunicole.fr/wp-content/uploads/2025/03/", "page": "https://maitresselunicole.fr/2025/03/13/exploitation-dalbum-calinours-se-reveille/", "prefix": ["calinourssereveille", "calinourssereveil"], "docs": [{"l": "📚 Imagier (47 cartes)", "c": "imagier", "f": "imagier-vocabulaire-calinours-se-reveille.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-calinours-se-reveille-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-calinours-se-reveille-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-calinours-se-reveille-9-pieces.pdf"}, {"l": "⭐ Constellation 1→2", "c": "numération", "f": "colle-la-constellation-qui-correspond-calinours-se-reveille-1-2.pdf"}, {"l": "⭐ Constellation 1→3", "c": "numération", "f": "colle-la-constellation-qui-correspond-calinours-se-reveille-1-3.pdf"}, {"l": "⭐ Constellation 1→5", "c": "numération", "f": "colle-la-constellation-qui-correspond-calinours-se-reveille-1-5.pdf"}, {"l": "🔢 Chiffre 1→3", "c": "numération", "f": "colle-le-chiffre-qui-correspond-calinours-se-reveille-1-3.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-calinours-se-reveille-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-calinours-se-reveille-1-9.pdf"}, {"l": "✏️ Écris 1→19", "c": "numération", "f": "ecris-le-nombre-qui-correspond-calinours-se-reveille-1-19.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-calinours-se-reveille-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-calinours-se-reveille-mots.pdf"}, {"l": "✍️ Titre — capitales", "c": "titre", "f": "titre-a-reecrire-calinours-se-reveille-capitales.pdf"}, {"l": "✍️ Titre — cursives", "c": "titre", "f": "titre-a-reecrire-calinours-se-reveille-cursives.pdf"}, {"l": "🖼️ Images de l'album", "c": "images", "f": "images-de-lalbum-calinours-se-reveille.pdf"}]}, {"id": "cestmafleur", "title": "C'est ma fleur !", "author": "Alice Hemming & Nicola Slater", "themes": ["printemps"], "levels": ["PS", "MS", "GS"], "emoji": "🌷", "base": "https://maitresselunicole.fr/wp-content/uploads/2026/03/", "page": "https://maitresselunicole.fr/2026/03/01/exploitation-dalbum-cest-ma-fleur/", "prefix": ["cestmafleur"], "docs": [{"l": "📚 Imagier lexique", "c": "imagier", "f": "imagier-lexique-cest-ma-fleur.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-cest-ma-fleur-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-cest-ma-fleur-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-cest-ma-fleur-9-pieces.pdf"}, {"l": "⭐ Constellation 1→3", "c": "numération", "f": "colle-la-constellation-qui-correspond-cest-ma-fleur-1-3.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-cest-ma-fleur-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-cest-ma-fleur-1-9.pdf"}, {"l": "✏️ Écris 1→9", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-cest-ma-fleur-1-9.pdf"}, {"l": "✏️ Écris 1→19", "c": "numération", "f": "ecris-le-nombre-qui-correspond-cest-ma-fleur-1-19.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-cest-ma-fleur-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-cest-ma-fleur-mots.pdf"}, {"l": "✍️ Titre — capitales", "c": "titre", "f": "titre-a-reecrire-cest-ma-fleur-capitales.pdf"}, {"l": "✍️ Titre — cursives", "c": "titre", "f": "titre-a-reecrire-cest-ma-fleur-cursives.pdf"}]}, {"id": "lapinprintemps", "title": "Le lapin de printemps", "author": "Yannick Lefrançois", "themes": ["printemps"], "levels": ["PS", "MS", "GS"], "emoji": "🌸", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/03/", "page": "https://maitresselunicole.fr/2023/03/25/exploitation-dalbum-le-lapin-de-printemps/", "prefix": ["lelapindeprintemps"], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-le-lapin-de-printemps.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-le-lapin-de-printemps-4-pieces.pdf"}, {"l": "🧩 Puzzle 6p", "c": "puzzle", "f": "puzzle-couverture-album-le-lapin-de-printemps-6-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-le-lapin-de-printemps-9-pieces.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-lapin-de-printemps-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-le-lapin-de-printemps-1-9.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-le-lapin-de-printemps-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-le-lapin-de-printemps-mots.pdf"}, {"l": "🖼️ Images de l'album", "c": "images", "f": "images-de-lalbum-le-lapin-de-printemps.pdf"}]}, {"id": "onvole", "title": "On a volé le printemps", "author": "Orianne Lallemand & Hervé Le Goff", "themes": ["printemps"], "levels": ["PS", "MS", "GS"], "emoji": "🌻", "base": "https://maitresselunicole.fr/wp-content/uploads/2024/04/", "page": "https://maitresselunicole.fr/2024/04/03/exploitation-dalbum-on-a-vole-le-printemps/", "prefix": [], "docs": [{"l": "📚 Imagier (58 cartes)", "c": "imagier", "f": "imagier-vocabulaire-on-a-vole-le-printemps.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-on-a-vole-le-printemps-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-on-a-vole-le-printemps-9-pieces.pdf"}, {"l": "🔢 Chiffre 1→5", "c": "numération", "f": "colle-le-chiffre-qui-correspond-on-a-vole-le-printemps-1-5.pdf"}, {"l": "🔢 Chiffre 1→9", "c": "numération", "f": "colle-le-chiffre-qui-correspond-on-a-vole-le-printemps-1-9.pdf"}, {"l": "✏️ Écris 1→19", "c": "numération", "f": "ecris-le-chiffre-qui-correspond-on-a-vole-le-printemps-1-19.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-on-a-vole-le-printemps-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-on-a-vole-le-printemps-mots.pdf"}]}, {"id": "brouille", "title": "La brouille", "author": "Claude Boujon", "themes": ["printemps"], "levels": ["PS", "MS", "GS"], "emoji": "🐰", "base": "https://maitresselunicole.fr/wp-content/uploads/2023/05/", "page": "https://maitresselunicole.fr/2023/05/03/lexploitation-dalbum-la-brouille/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-la-brouille.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-la-brouille-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-la-brouille-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-la-brouille-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-la-brouille-mots.pdf"}]}, {"id": "poule", "title": "La petite poule rousse", "author": "Byron Barton", "themes": ["animaux"], "levels": ["PS", "MS", "GS"], "emoji": "🐔", "base": "https://maitresselunicole.fr/wp-content/uploads/2022/03/", "page": "https://maitresselunicole.fr/2022/03/22/exploitation-dalbum-la-petite-poule-rousse/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-la-petite-poule-rousse.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-la-petite-poule-rousse-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-la-petite-poule-rousse-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-la-petite-poule-rousse-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-la-petite-poule-rousse-mots.pdf"}]}, {"id": "arcenciel", "title": "Arc-en-ciel", "author": "Marcus Pfister", "themes": ["animaux"], "levels": ["PS", "MS", "GS"], "emoji": "🐟", "base": "https://maitresselunicole.fr/wp-content/uploads/2026/02/", "page": "https://maitresselunicole.fr/2026/02/25/exploitation-dalbum-arc-en-ciel/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-arc-en-ciel.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-arc-en-ciel-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-arc-en-ciel-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-arc-en-ciel-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-arc-en-ciel-mots.pdf"}]}, {"id": "cochons", "title": "Les trois petits cochons", "author": "Olivier Tallec", "themes": ["animaux"], "levels": ["PS", "MS", "GS"], "emoji": "🐷", "base": "https://maitresselunicole.fr/wp-content/uploads/2026/02/", "page": "https://maitresselunicole.fr/2026/02/01/exploitation-dalbum-les-trois-petits-cochons-version-olivier-tallec/", "prefix": [], "docs": [{"l": "📚 Imagier vocabulaire", "c": "imagier", "f": "imagier-vocabulaire-les-trois-petits-cochons.pdf"}, {"l": "🧩 Puzzle 4p", "c": "puzzle", "f": "puzzle-couverture-album-les-trois-petits-cochons-4-pieces.pdf"}, {"l": "🧩 Puzzle 9p", "c": "puzzle", "f": "puzzle-couverture-album-les-trois-petits-cochons-9-pieces.pdf"}, {"l": "🔤 Titre — lettres", "c": "titre", "f": "titre-a-reformer-les-trois-petits-cochons-lettres.pdf"}, {"l": "🔤 Titre — mots", "c": "titre", "f": "titre-a-reformer-les-trois-petits-cochons-mots.pdf"}]}];
+const C2={"items": [
+{"id":"c2-orthoquiz","title":"ORTHOQUIZ","emoji":"✍️","cat":"français","page":"https://maitresselunicole.fr/2024/05/09/orthoquiz/","desc":"Quiz interactif d'orthographe pour le cycle 2 et 3","base":"https://maitresselunicole.fr/wp-content/uploads/2024/05/","docs":[{"l":"📄 Explications ORTHOQUIZ","c":"fiche","f":"explications-orthoquiz.pdf"}]},
+{"id":"c2-motsoutils","title":"Mots-outils","emoji":"📝","cat":"français","page":"https://maitresselunicole.fr/2023/12/16/mots-outils/","desc":"Listes de mots-outils à mémoriser, plusieurs formats","base":"https://maitresselunicole.fr/wp-content/uploads/2023/12/","docs":[{"l":"📄 Mots-outils maternelle","c":"fiche","f":"mots-outils-maternelle.pdf"}]},
+{"id":"c2-colorielettre","title":"Colorie les lettres","emoji":"🖍️","cat":"français","page":"https://maitresselunicole.fr/2022/04/14/colorie-les-lettres/","desc":"Coloriages pour reconnaître les lettres dans différentes écritures","base":"https://maitresselunicole.fr/wp-content/uploads/2022/04/","docs":[{"l":"🖍️ Scriptes","c":"fiche","f":"colorier-les-lettres-scriptes.pdf"},{"l":"🖍️ Capitales","c":"fiche","f":"colorier-les-lettres-capitales.pdf"},{"l":"🖍️ Cursives minuscules","c":"fiche","f":"colorier-les-lettres-cursives-minuscules.pdf"},{"l":"🖍️ Cursives majuscules","c":"fiche","f":"colorier-les-lettres-cursives-majuscules.pdf"}]},
+{"id":"c2-alphas","title":"Les Alphas","emoji":"🔤","cat":"français","page":"https://maitresselunicole.fr/2021/01/20/les-alphas/","desc":"Ressources pour travailler avec la méthode des Alphas (GS/CP)"},
+{"id":"c2-ordrealphabetique","title":"L'ordre alphabétique","emoji":"🔡","cat":"français","page":"https://maitresselunicole.fr/2021/04/05/lordre-alphabetique-cycle-2/","desc":"Leçons et exercices pour ranger dans l'ordre alphabétique"},
+{"id":"c2-lettres","title":"Lettres de l'alphabet — affichages","emoji":"🅰️","cat":"français","page":"https://maitresselunicole.fr/2025/07/30/lettres-de-lalphabet-affichages/","desc":"Affichages des lettres en capitales, scriptes et cursives"},
+{"id":"c2-blindtest","title":"Blind tests phono","emoji":"🎧","cat":"français","page":"https://maitresselunicole.fr/2025/07/22/blind-tests-phono/","desc":"Blind tests sonores : bruits de la nature, saisons, Noël…"},
+{"id":"c2-positionsspatiales","title":"Les positions spatiales","emoji":"📍","cat":"maths","page":"https://maitresselunicole.fr/2024/01/04/les-positions-spatiales/","desc":"Dessus, dessous, devant, derrière… imagier et exercices","base":"https://maitresselunicole.fr/wp-content/uploads/2024/01/","docs":[{"l":"📚 Imagier positions spatiales","c":"fiche","f":"imagier-positions-spatiales-1.pdf"},{"l":"📝 Vocabulaire positions spatiales","c":"fiche","f":"vocabulaire-positions-spatiales.pdf"},{"l":"🧩 Planches niveau 3","c":"fiche","f":"planches-positions-spatiales-3.pdf"},{"l":"🧩 Planches niveaux 2-3","c":"fiche","f":"planches-positions-spatiales-2-3.pdf"}]},
+{"id":"c2-puzzlesmaths","title":"Puzzles mathématiques","emoji":"🧩","cat":"maths","page":"https://maitresselunicole.fr/2024/06/16/puzzles-mathematiques-cycles-2-3/","desc":"Puzzles de numération et calcul du CP au CM2"},
+{"id":"c2-monnaie","title":"La monnaie","emoji":"💰","cat":"maths","page":"https://maitresselunicole.fr/2022/01/25/la-monnaie/","desc":"Exercices et manipulations autour de la monnaie"},
+{"id":"c2-carte","title":"Se repérer sur une carte","emoji":"🗺️","cat":"qlm","page":"https://maitresselunicole.fr/2020/12/22/se-reperer-sur-une-carte-cp-ce1/","desc":"Types de cartes, mers, frontières de la France (CP-CE1)"},
+{"id":"c2-calendrier","title":"Calendriers élémentaire 2025-2026","emoji":"📅","cat":"qlm","page":"https://maitresselunicole.fr/2025/07/16/calendriers-elementaire-2025-2026/","desc":"Calendriers mensuels pour l'élémentaire"},
+{"id":"c2-noelplans","title":"Plans de travail Noël CP→CM2","emoji":"🎄","cat":"pluridisciplinaire","page":"https://maitresselunicole.fr/2021/12/01/plans-de-travail-de-noel-differencies-du-cp-au-cm2/","desc":"Lecture, lexique, numération, géométrie autour de Noël"},
+{"id":"c2-eps","title":"EPS — Ava Sport","emoji":"🏃","cat":"eps","page":"https://maitresselunicole.fr/2023/08/24/enseigner-leps-avec-ava-sport/","desc":"Outil pour enseigner l'EPS (code promo LUNICOLE20)"},
+{"id":"c2-anglais","title":"Anglais","emoji":"🇬🇧","cat":"anglais","page":"https://maitresselunicole.fr/category/cycle-2/anglais/","desc":"Ressources d'anglais pour le cycle 2"},
+{"id":"c2-programmes","title":"Nouveaux programmes C2-C3","emoji":"📋","cat":"outils","page":"https://maitresselunicole.fr/2025/03/27/nouveaux-programmes-cycles-2-et-3/","desc":"Résumés des programmes 2024 de français et maths par niveaux (CP, CE1, CE2)","base":"https://maitresselunicole.fr/wp-content/uploads/2025/03/","docs":[{"l":"📖 Français C2","c":"programme","f":"resume-programme-de-francais-cycle-2-2024-1.pdf"},{"l":"🔢 Maths C2","c":"programme","f":"resume-programme-de-mathematiques-cycle-2-2024-1.pdf"},{"l":"📖 Français C3","c":"programme","f":"resume-programmes-de-francais-cycle-3-2025.pdf"},{"l":"🔢 Maths C3","c":"programme","f":"resume-programmes-de-mathematiques-cycle-3-2025.pdf"},{"l":"📖 Par niveaux Français C2","c":"programme","f":"resume-par-niveaux-programme-de-francais-cycle-2-2024-3.pdf"},{"l":"🔢 Par niveaux Maths C2","c":"programme","f":"resume-par-niveaux-programme-de-mathematiques-cycle-2-2024-1.pdf"},{"l":"📖 Par niveaux Français C3","c":"programme","f":"resume-par-niveaux-programmes-de-francais-cycle-3-2025.pdf"},{"l":"🔢 Par niveaux Maths C3","c":"programme","f":"resume-par-niveaux-programmes-de-mathematiques-cycle-3-2025.pdf"},{"l":"🤝 EMC C2-C3","c":"programme","f":"resume-par-niveaux-programme-denseignement-moral-et-civique-cycles-2-3-2024-1.pdf"},{"l":"🏃 EPS C2-C3","c":"programme","f":"resume-par-niveaux-programmes-evar-elementaire-2025-1.pdf"}]},
+{"id":"c2-carnet","title":"Carnet de bord enseignant","emoji":"📓","cat":"outils","page":"https://maitresselunicole.fr/2025/04/27/carnet-de-bord-2025-2026/","desc":"Carnet de bord complet pour l'année scolaire"}
+],"cats":{"français":"📖 Français","maths":"🔢 Mathématiques","qlm":"🌍 Questionner le monde","pluridisciplinaire":"📚 Pluridisciplinaire","eps":"🏃 EPS","anglais":"🇬🇧 Anglais","outils":"🛠️ Outils enseignant"},"catOrder":["français","maths","qlm","pluridisciplinaire","eps","anglais","outils"]};
+const C3={"items": [
+{"id":"c3-orthoquiz","title":"ORTHOQUIZ","emoji":"✍️","cat":"français","page":"https://maitresselunicole.fr/2024/05/09/orthoquiz/","desc":"Quiz interactif d'orthographe pour le cycle 3","base":"https://maitresselunicole.fr/wp-content/uploads/2024/05/","docs":[{"l":"📄 Explications ORTHOQUIZ","c":"fiche","f":"explications-orthoquiz.pdf"}]},
+{"id":"c3-homonymes","title":"Homonymes : homophones et homographes","emoji":"🔀","cat":"français","page":"https://maitresselunicole.fr/2021/01/30/les-homonymes-homophones-et-homographes-cm1-cm2/","desc":"Exercice, leçon et affichage CM1-CM2","base":"https://maitresselunicole.fr/wp-content/uploads/2021/01/","docs":[{"l":"✏️ Exercice CM1-CM2","c":"fiche","f":"les-homonymes-homophones-homographes_exercice-cm1-cm2.pdf"},{"l":"📖 Leçon CM1-CM2","c":"fiche","f":"les-homonymes-homophones-homographes_lecon-cm1-cm2-1.pdf"},{"l":"🖼️ Affichage CM1-CM2","c":"fiche","f":"les-homonymes-homophones-homographes_affichage-cm1-cm2.pdf"}]},
+{"id":"c3-lettres","title":"Lettres de l'alphabet — affichages","emoji":"🅰️","cat":"français","page":"https://maitresselunicole.fr/2025/07/30/lettres-de-lalphabet-affichages/","desc":"Affichages des lettres en capitales, scriptes et cursives"},
+{"id":"c3-blindtest","title":"Blind tests phono","emoji":"🎧","cat":"français","page":"https://maitresselunicole.fr/2025/07/22/blind-tests-phono/","desc":"Blind tests sonores : bruits de la nature, saisons, Noël…"},
+{"id":"c3-fractions","title":"Les fractions","emoji":"🔢","cat":"maths","page":"https://maitresselunicole.fr/2022/02/09/les-fractions/","desc":"Affiches, leçon, mémo, exercices, bandes à manipuler","base":"https://maitresselunicole.fr/wp-content/uploads/2022/02/","docs":[{"l":"🖼️ Affiches fractions","c":"fiche","f":"affiches-fractions.pdf"},{"l":"🖼️ Affiches vocabulaire dénominateurs","c":"fiche","f":"affiches-fractions-vocabulaire-denominateurs.pdf"},{"l":"📖 Leçon fractions","c":"fiche","f":"les-fractions_lecon.pdf"},{"l":"📖 Leçon vocabulaire dénominateurs","c":"fiche","f":"les-fractions_lecon-vocabulaire-denominateurs.pdf"},{"l":"✏️ Exercices","c":"fiche","f":"les-fractions_exercices.pdf"},{"l":"✂️ Bandes à comparer","c":"fiche","f":"bandes-a-comparer.pdf"}]},
+{"id":"c3-contenances","title":"Les contenances","emoji":"🫗","cat":"maths","page":"https://maitresselunicole.fr/2021/11/06/les-contenances/","desc":"Affiche mémo, leçon, tableaux de conversions, exercices CM1","base":"https://maitresselunicole.fr/wp-content/uploads/2021/11/","docs":[{"l":"🖼️ Visualiser les unités de mesure","c":"fiche","f":"visualiser-les-unites-de-mesure-de-contenances.pdf"},{"l":"📖 Leçon contenances","c":"fiche","f":"les-contenances_lecon-1.pdf"},{"l":"📊 Tableau de conversions","c":"fiche","f":"tableau-de-conversions-contenances.pdf"},{"l":"✏️ Exercices","c":"fiche","f":"les-contenances_exercices.pdf"}]},
+{"id":"c3-puzzlesmaths","title":"Puzzles mathématiques","emoji":"🧩","cat":"maths","page":"https://maitresselunicole.fr/2024/06/16/puzzles-mathematiques-cycles-2-3/","desc":"Puzzles de numération et calcul du CP au CM2"},
+{"id":"c3-positionsspatiales","title":"Les positions spatiales","emoji":"📍","cat":"maths","page":"https://maitresselunicole.fr/2024/01/04/les-positions-spatiales/","desc":"Imagier et exercices sur les positions spatiales","base":"https://maitresselunicole.fr/wp-content/uploads/2024/01/","docs":[{"l":"📚 Imagier positions spatiales","c":"fiche","f":"imagier-positions-spatiales-1.pdf"},{"l":"📝 Vocabulaire positions spatiales","c":"fiche","f":"vocabulaire-positions-spatiales.pdf"},{"l":"🧩 Planches niveau 3","c":"fiche","f":"planches-positions-spatiales-3.pdf"},{"l":"🧩 Planches niveaux 2-3","c":"fiche","f":"planches-positions-spatiales-2-3.pdf"}]},
+{"id":"c3-enigmes","title":"Énigmes CM1-CM2","emoji":"🧠","cat":"maths","page":"https://maitresselunicole.fr/2021/02/13/enigmes-cm1-cm2/","desc":"Énigmes mathématiques adaptées pour le cycle 3","base":"https://maitresselunicole.fr/wp-content/uploads/2021/02/","docs":[{"l":"🧠 Fiches portrait à remplir CE2-CM1-CM2","c":"fiche","f":"fiches-portrait-a-remplir-ce2-cm1-cm2.pdf"},{"l":"💡 Aide fiches portrait","c":"fiche","f":"aide-pour-fiches-portrait-a-remplir-ce2-cm1-cm2.pdf"}]},
+{"id":"c3-noelplans","title":"Plans de travail Noël CP→CM2","emoji":"🎄","cat":"pluridisciplinaire","page":"https://maitresselunicole.fr/2021/12/01/plans-de-travail-de-noel-differencies-du-cp-au-cm2/","desc":"Lecture, lexique, numération, géométrie autour de Noël"},
+{"id":"c3-eps","title":"EPS — Ava Sport","emoji":"🏃","cat":"eps","page":"https://maitresselunicole.fr/2023/08/24/enseigner-leps-avec-ava-sport/","desc":"Outil pour enseigner l'EPS (code promo LUNICOLE20)"},
+{"id":"c3-anglais","title":"Anglais","emoji":"🇬🇧","cat":"anglais","page":"https://maitresselunicole.fr/category/cycle-3/anglais-cycle-3/","desc":"Ressources d'anglais pour le cycle 3 (CM1-CM2)"},
+{"id":"c3-sciences","title":"Sciences et technologies","emoji":"🔬","cat":"sciences","page":"https://maitresselunicole.fr/category/cycle-3/sciences-et-technologies/","desc":"Système solaire — 11 fiches à imprimer","base":"https://maitresselunicole.fr/wp-content/uploads/2022/02/","docs":[{"l":"🌌 Illustration système solaire","c":"fiche","f":"le-systeme-solaire_illustration.pdf"},{"l":"🖼️ Affiches planètes et Soleil","c":"fiche","f":"affiches-planetes-soleil.pdf"},{"l":"🃏 Cartes planètes petit format","c":"fiche","f":"cartes-planetes-petit-format.pdf"},{"l":"📊 Tableau à remplir planètes","c":"fiche","f":"tableau-a-remplir-planetes.pdf"},{"l":"🎨 Invente ta planète","c":"fiche","f":"invente-ta-planete.pdf"},{"l":"📝 Affiche vocabulaire","c":"fiche","f":"affiche-vocabulaire.pdf"},{"l":"🔢 Mémo ordre des planètes","c":"fiche","f":"memo-ordre-des-planetes-1.pdf"},{"l":"📖 Leçon","c":"fiche","f":"le-systeme-solaire_lecon-2.pdf"},{"l":"✏️ Exercices guidés","c":"fiche","f":"le-systeme-solaire_exercices-guides-1.pdf"},{"l":"✏️ Exercices","c":"fiche","f":"le-systeme-solaire_exercices.pdf"},{"l":"📋 Évaluation","c":"fiche","f":"le-systeme-solaire_evaluation.pdf"}]},
+{"id":"c3-emc","title":"EMC — Enseignement moral et civique","emoji":"🤝","cat":"emc","page":"https://maitresselunicole.fr/category/cycle-3/emc/","desc":"Ressources d'EMC pour le cycle 3","base":"https://maitresselunicole.fr/wp-content/uploads/2020/12/","docs":[{"l":"📱 Les réseaux sociaux CM1-CM2","c":"fiche","f":"les-reseaux-sociaux-cm1-cm2-2.pdf"}]},
+{"id":"c3-programmes","title":"Nouveaux programmes C2-C3","emoji":"📋","cat":"outils","page":"https://maitresselunicole.fr/2025/03/27/nouveaux-programmes-cycles-2-et-3/","desc":"Résumés des programmes 2024 de français et maths par niveaux","base":"https://maitresselunicole.fr/wp-content/uploads/2025/03/","docs":[{"l":"📖 Français C2","c":"programme","f":"resume-programme-de-francais-cycle-2-2024-1.pdf"},{"l":"🔢 Maths C2","c":"programme","f":"resume-programme-de-mathematiques-cycle-2-2024-1.pdf"},{"l":"📖 Français C3","c":"programme","f":"resume-programmes-de-francais-cycle-3-2025.pdf"},{"l":"🔢 Maths C3","c":"programme","f":"resume-programmes-de-mathematiques-cycle-3-2025.pdf"},{"l":"📖 Par niveaux Français C2","c":"programme","f":"resume-par-niveaux-programme-de-francais-cycle-2-2024-3.pdf"},{"l":"🔢 Par niveaux Maths C2","c":"programme","f":"resume-par-niveaux-programme-de-mathematiques-cycle-2-2024-1.pdf"},{"l":"📖 Par niveaux Français C3","c":"programme","f":"resume-par-niveaux-programmes-de-francais-cycle-3-2025.pdf"},{"l":"🔢 Par niveaux Maths C3","c":"programme","f":"resume-par-niveaux-programmes-de-mathematiques-cycle-3-2025.pdf"},{"l":"🤝 EMC C2-C3","c":"programme","f":"resume-par-niveaux-programme-denseignement-moral-et-civique-cycles-2-3-2024-1.pdf"},{"l":"🏃 EPS C2-C3","c":"programme","f":"resume-par-niveaux-programmes-evar-elementaire-2025-1.pdf"}]},
+{"id":"c3-calendrier","title":"Calendriers élémentaire 2025-2026","emoji":"📅","cat":"outils","page":"https://maitresselunicole.fr/2025/07/16/calendriers-elementaire-2025-2026/","desc":"Calendriers mensuels pour l'élémentaire"},
+{"id":"c3-carnet","title":"Carnet de bord enseignant","emoji":"📓","cat":"outils","page":"https://maitresselunicole.fr/2025/04/27/carnet-de-bord-2025-2026/","desc":"Carnet de bord complet pour l'année scolaire"}
+],"cats":{"français":"📖 Français","maths":"🔢 Mathématiques","pluridisciplinaire":"📚 Pluridisciplinaire","eps":"🏃 EPS","anglais":"🇬🇧 Anglais","sciences":"🔬 Sciences","emc":"🤝 EMC","outils":"🛠️ Outils enseignant"},"catOrder":["français","maths","pluridisciplinaire","eps","anglais","sciences","emc","outils"]};
+const TC={rentrée:{c:"#E8734A",e:"🏫",l:"Rentrée"},automne:{c:"#D4762C",e:"🍂",l:"Automne"},noël:{c:"#C0392B",e:"🎄",l:"Noël"},hiver:{c:"#2E86C1",e:"❄️",l:"Hiver"},printemps:{c:"#27AE60",e:"🌸",l:"Printemps"},animaux:{c:"#8E44AD",e:"🐾",l:"Animaux"}};
+const LC={PS:"#E8734A",MS:"#2E86C1",GS:"#8E44AD"};
+const CO=["imagier","puzzle","numération","titre","mots","images"];
+const CL={imagier:"📚 Imagier",puzzle:"🧩 Puzzles","numération":"🔢 Numération",titre:"🔤 Titre",mots:"🔠 Mots",images:"🖼️ Images"};
+const IC={imagier:"📚",puzzle:"🧩","numération":"🔢",titre:"🔤",mots:"🔠",images:"🖼️"};
+let S={v:"h",ai:null,ri:null,f:null,q:"",cycle:1};
+const $=i=>document.getElementById(i);
+
+// ── Storage helpers ──────────────────────────────────────────────────────────
+function lsGet(k,def){try{const v=localStorage.getItem(k);return v!==null?JSON.parse(v):def}catch(e){return def}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+let printed=new Set(lsGet('pl_printed',[]));
+let favs=new Set(lsGet('pl_favs',[]));
+let dark=lsGet('pl_dark',false);
+let curPeriod=lsGet('pl_period','');
+
+function savePrinted(){lsSet('pl_printed',[...printed])}
+function saveFavs(){lsSet('pl_favs',[...favs])}
+
+function applyDark(){document.body.classList.toggle('dm',dark)}
+applyDark();
+
+function go(p){Object.assign(S,p);R();window.scrollTo(0,0)}
+function bg(t,c){return'<span class="bd" style="background:'+c+'">'+t+'</span>'}
+function R(){$("app").innerHTML=S.v==="a"?rA():rH();bindAll()}
+
+// ── Settings modal ───────────────────────────────────────────────────────────
+function openSettings(){
+  const ps=[{k:'rentrée',e:'🏫',l:'Rentrée'},{k:'automne',e:'🍂',l:'Automne'},{k:'noël',e:'🎄',l:'Noël'},{k:'hiver',e:'❄️',l:'Hiver'},{k:'printemps',e:'🌸',l:'Printemps'},{k:'animaux',e:'🐾',l:'Animaux'}];
+  const div=document.createElement('div');
+  div.className='modal-bg';
+  div.innerHTML='<div class="modal">'
+    +'<h2>⚙️ Réglages</h2>'
+    +'<div class="mrow"><div><div class="mlabel">🌙 Mode sombre</div></div>'
+    +'<div class="toggle'+(dark?' on':'')+'" id="tog-dark"></div></div>'
+    +'<div class="mrow" style="flex-direction:column;align-items:flex-start;gap:10px">'
+    +'<div class="mlabel">📅 Période en cours</div>'
+    +'<div class="pchips">'+ps.map(function(p){
+      var on=curPeriod===p.k;
+      var col=(TC[p.k]||{c:'#888'}).c;
+      return '<div class="pchip'+(on?' on':'')+'" style="color:'+col+';border-color:'+(on?col:'transparent')+';background:'+(on?col+'22':'rgba(0,0,0,.04)')+'" data-per="'+p.k+'">'+p.e+' '+p.l+'</div>';
+    }).join('')+'</div></div>'
+    +'<div class="mrow"><div><div class="mlabel">🗑️ Réinitialiser les coches</div><div class="msub">Efface toutes les fiches cochées</div></div>'
+    +'<button id="btn-reset" style="background:#fee;color:#c0392b;border-radius:10px;padding:8px 14px;font-size:.78rem;font-weight:700;flex-shrink:0;border:none;cursor:pointer">Effacer</button></div>'
+    +'<button id="btn-close-modal" style="width:100%;margin-top:18px;padding:14px;background:var(--ac);color:#fff;border-radius:14px;font-size:.9rem;font-weight:700;border:none;cursor:pointer">Fermer</button>'
+    +'</div>';
+  document.body.appendChild(div);
+  $('tog-dark').onclick=function(){dark=!dark;lsSet('pl_dark',dark);applyDark();div.remove();openSettings()};
+  div.querySelectorAll('[data-per]').forEach(function(el){
+    el.onclick=function(){curPeriod=curPeriod===el.dataset.per?'':el.dataset.per;lsSet('pl_period',curPeriod);div.remove();openSettings();R()};
+  });
+  $('btn-reset').onclick=function(){if(confirm('Effacer toutes les coches ?')){printed=new Set();savePrinted();div.remove();R()}};
+  $('btn-close-modal').onclick=function(){div.remove()};
+  div.onclick=function(e){if(e.target===div)div.remove()};
+}
+
+// ── Tabs ─────────────────────────────────────────────────────────────────────
+function rTabs(){
+  var favTab=favs.size?'<div class="tab'+(S.cycle===9?' on':'')+'" data-cy="9">⭐<br><span style="font-size:.55rem;opacity:.7">'+favs.size+' épinglé'+(favs.size>1?'s':'')+'</span></div>':'';
+  return'<div class="tabs">'
+    +'<div class="tab'+(S.cycle===1?' on':'')+'" data-cy="1">🎨 C1<br><span style="font-size:.55rem;opacity:.7">Maternelle</span></div>'
+    +'<div class="tab'+(S.cycle===2?' c2on':'')+'" data-cy="2">📖 C2<br><span style="font-size:.55rem;opacity:.7">CP·CE1·CE2</span></div>'
+    +'<div class="tab'+(S.cycle===3?' c3on':'')+'" data-cy="3">📘 C3<br><span style="font-size:.55rem;opacity:.7">CM1·6e</span></div>'
+    +favTab+'<div class="tab"'+(S.v==="ai"?' style="color:var(--ac);border-bottom:3px solid var(--ac)"':'')+'  onclick="aiShowScreen()">&#10024;<br><span style="font-size:.55rem;opacity:.7">Assistante</span></div>'+'</div>';
+}
+
+// ── Album card (C1) ──────────────────────────────────────────────────────────
+function rCard(a,ai){
+  var done=a.docs.filter(function(d){return printed.has(a.id+':'+d.f)}).length;
+  var pct=a.docs.length?Math.round(done/a.docs.length*100):0;
+  var isFav=favs.has('al:'+a.id);
+  var isPeriod=curPeriod&&a.themes.indexOf(curPeriod)>-1;
+  return'<div class="ac" data-ai="'+ai+'">'
+    +(isPeriod?'<span class="period-badge">'+(TC[curPeriod]||{e:'📅'}).e+' En cours</span>':'')
+    +'<span class="em">'+a.emoji+'</span>'
+    +'<h3>'+a.title+'</h3>'
+    +'<p class="au">'+a.author+'</p>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:2px;justify-content:center">'+a.themes.map(function(t){return bg((TC[t]||{l:t}).l,(TC[t]||{c:'#888'}).c)}).join('')+'</div>'
+    +'<div style="display:flex;gap:2px">'+a.levels.map(function(l){return bg(l,LC[l]||'#888')}).join('')+'</div>'
+    +'<p style="font-size:.62rem;color:var(--tl);font-weight:700;margin-top:2px">'+a.docs.length+' fiches 🖨️</p>'
+    +(a.docs.length?'<div class="prog"><div class="prog-bar" style="width:'+pct+'%"></div></div>':'')
+    +'<button class="fav-btn'+(isFav?' on':'')+'" data-fav="al:'+a.id+'">'+(isFav?'⭐':'☆')+'</button>'
+    +'</div>';
+}
+
+// ── C2/C3 resource card ──────────────────────────────────────────────────────
+function rCXCard(i,ri){
+  var done=i.docs?i.docs.filter(function(d){return printed.has(i.id+':'+d.f)}).length:0;
+  var isFav=favs.has('cx:'+i.id);
+  return'<div class="ac" data-ri="'+ri+'">'
+    +'<span class="em">'+i.emoji+'</span>'
+    +'<h3>'+i.title+'</h3>'
+    +(i.docs&&i.docs.length
+      ?'<p style="font-size:.62rem;color:var(--tl);font-weight:700;margin-top:2px">'+i.docs.length+' fiches 🖨️</p>'
+       +'<div class="prog"><div class="prog-bar" style="width:'+Math.round(done/i.docs.length*100)+'%"></div></div>'
+      :'<p style="font-size:.62rem;color:var(--tl);font-weight:700;margin-top:2px">Voir le site →</p>')
+    +'<button class="fav-btn'+(isFav?' on':'')+'" data-fav="cx:'+i.id+'">'+(isFav?'⭐':'☆')+'</button>'
+    +'</div>';
+}
+
+// ── C2/C3 view ───────────────────────────────────────────────────────────────
+function rCX(data,cls,accent,label,sub){
+  // Detail view
+  if(S.ri!==null){
+    var i=data.items[S.ri];
+    if(!i)return'';
+    var isFav=favs.has('cx:'+i.id);
+    var done=i.docs?i.docs.filter(function(d){return printed.has(i.id+':'+d.f)}).length:0;
+    var total=i.docs?i.docs.length:0;
+    var pct=total?Math.round(done/total*100):0;
+    return'<div class="hdr '+cls+'">'
+      +'<div class="hdr-row"><div>'
+      +'<button class="bk" id="bx">◂ '+sub+'</button>'
+      +'<h1 style="font-size:'+(i.title.length>24?'.95rem':'1.15rem')+'">'+i.title+'</h1>'
+      +'<p style="opacity:.85;font-size:.8rem">'+i.desc+'</p>'
+      +'</div><div class="hdr-acts">'
+      +'<button class="ico-btn" id="fav-hdr">'+(isFav?'⭐':'☆')+'</button>'
+      +'<button class="ico-btn" id="set-btn">⚙️</button>'
+      +'</div></div></div>'
+      +'<div class="hr"><span class="em">'+i.emoji+'</span><h2>'+i.title+'</h2>'
+      +(total?'<p style="font-size:.76rem;color:var(--tl);font-weight:600;margin-top:6px" id="prog-lbl">'+done+'/'+total+' fiches imprimées</p>'
+        +'<div style="width:80%;margin:8px auto 0;height:6px;background:rgba(0,0,0,.08);border-radius:6px;overflow:hidden"><div id="prog-bar" style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,#27AE60,#2ECC71);border-radius:6px;transition:width .3s"></div></div>':'')
+      +'</div>'
+      +'<a class="lnk" href="'+i.page+'" target="_blank" style="color:'+accent+'">📖 Voir sur Maîtresse Lunicole</a>'
+      +(total
+        ?'<div class="ct">Fiches à imprimer</div><div class="dl">'
+          +i.docs.map(function(d){
+            var ck=printed.has(i.id+':'+d.f);
+            return'<a href="'+(i.base||'')+d.f+'" target="_blank" class="dc">'
+              +'<div class="nt"><span>'+d.l.split(' ')[0]+'</span><span class="lb">'+d.l.replace(/^[^\s]+\s/,'')+'</span></div>'
+              +'<div class="nf"><h3>'+d.l+'</h3><p class="sb" style="color:'+accent+'">🖨️ Ouvrir & Imprimer</p></div>'
+              +'<button class="ck'+(ck?' done':'')+'" data-dk="'+i.id+':'+d.f+'">'+(ck?'✓':'')+'</button>'
+              +'</a>';
+          }).join('')+'</div>'
+        :'<p style="font-size:.8rem;color:var(--tl);font-weight:600;text-align:center;padding:20px 14px">Toutes les ressources sont sur le site Maîtresse Lunicole.</p>')
+      +'<div style="height:60px"></div>';
+  }
+  // Grid view
+  var cats={};
+  data.items.forEach(function(i){if(!cats[i.cat])cats[i.cat]=[];cats[i.cat].push(i)});
+  return'<div class="hdr '+cls+'">'
+    +'<div class="hdr-row"><div>'
+    +'<h1>'+label+'</h1>'
+    +'<p style="opacity:.85;font-size:.8rem">'+data.items.length+' ressources pédagogiques</p>'
+    +'</div><div class="hdr-acts"><button class="ico-btn" id="set-btn">⚙️</button></div></div>'
+    +'</div>'+rTabs()
+    +'<div style="padding:14px 14px 4px;text-align:center"><p style="font-size:.78rem;color:var(--tl);font-weight:600">Ressources Maîtresse Lunicole · '+sub+'<br>Appuyez pour accéder aux fiches 🖨️</p></div>'
+    +data.catOrder.filter(function(c){return cats[c]}).map(function(c){
+      return'<div class="ct">'+data.cats[c]+'</div><div class="grid" style="padding-bottom:10px">'
+        +cats[c].map(function(i){return rCXCard(i,data.items.indexOf(i))}).join('')
+        +'</div>';
+    }).join('')
+    +'<div style="height:60px"></div>';
+}
+
+// ── C1 home view ─────────────────────────────────────────────────────────────
+function rH(){
+  if(S.cycle===2)return rCX(C2,'c2','var(--c2)','📖 Cycle 2 — CP · CE1 · CE2','Cycle 2');
+  if(S.cycle===3)return rCX(C3,'c3','var(--c3)','📘 Cycle 3 — CM1 · CM2 · 6e','Cycle 3');
+  // Favorites
+  if(S.cycle===9){
+    var favAls=AL.filter(function(a){return favs.has('al:'+a.id)});
+    var favC2=C2.items.filter(function(i){return favs.has('cx:'+i.id)});
+    var favC3=C3.items.filter(function(i){return favs.has('cx:'+i.id)});
+    var empty=!favAls.length&&!favC2.length&&!favC3.length;
+    return'<div class="hdr"><div class="hdr-row"><div><h1>⭐ Favoris</h1><p style="opacity:.85;font-size:.8rem">'+(empty?'Aucun favori':favs.size+' ressource'+(favs.size>1?'s':'')+' épinglée'+(favs.size>1?'s':''))+'</p></div>'
+      +'<div class="hdr-acts"><button class="ico-btn" id="set-btn">⚙️</button></div></div></div>'
+      +rTabs()
+      +(empty
+        ?'<div style="padding:50px 20px;text-align:center"><p style="font-size:3rem">☆</p><p style="font-size:.88rem;color:var(--tl);font-weight:600;margin-top:14px">Aucun favori pour l\'instant.<br>Appuyez sur ☆ sur un album ou une ressource.</p></div>'
+        :(favAls.length?'<div class="ct">🎨 Albums Cycle 1</div><div class="grid" style="padding-bottom:10px">'+favAls.map(function(a){return rCard(a,AL.indexOf(a))}).join('')+'</div>':'')
+         +(favC2.length?'<div class="ct">📖 Cycle 2</div><div class="grid" style="padding-bottom:10px">'+favC2.map(function(i){return rCXCard(i,C2.items.indexOf(i))}).join('')+'</div>':'')
+         +(favC3.length?'<div class="ct">📘 Cycle 3</div><div class="grid" style="padding-bottom:10px">'+favC3.map(function(i){return rCXCard(i,C3.items.indexOf(i))}).join('')+'</div>':''))
+      +'<div style="height:60px"></div>';
+  }
+  // C1 grid
+  var q=S.q.toLowerCase(),f=S.f;
+  var als=AL.filter(function(a){
+    var m=!q||a.title.toLowerCase().indexOf(q)>-1||a.author.toLowerCase().indexOf(q)>-1||a.themes.some(function(t){return t.indexOf(q)>-1});
+    return m&&(!f||a.themes.indexOf(f)>-1);
+  });
+  // Sort: current period first, then favs
+  als.sort(function(a,b){
+    var ap=curPeriod&&a.themes.indexOf(curPeriod)>-1;
+    var bp=curPeriod&&b.themes.indexOf(curPeriod)>-1;
+    if(ap&&!bp)return-1;if(!ap&&bp)return 1;
+    var af=favs.has('al:'+a.id),bf=favs.has('al:'+b.id);
+    if(af&&!bf)return-1;if(!af&&bf)return 1;
+    return 0;
+  });
+  var ths=[...new Set(AL.flatMap(function(a){return a.themes}))];
+  return'<div class="hdr"><div class="hdr-row"><div>'
+    +'<h1>📚 La bibliothèque de Perrine</h1>'
+    +'<p style="opacity:.85;font-size:.8rem">'+AL.length+' albums · '+C2.items.length+' C2 · '+C3.items.length+' C3</p>'
+    +'</div><div class="hdr-acts"><button class="ico-btn" id="set-btn">⚙️</button></div></div></div>'
+    +rTabs()
+    +'<div style="padding:8px 14px 2px;position:relative"><span style="position:absolute;left:26px;top:50%;transform:translateY(-50%);opacity:.35;pointer-events:none">🔍</span>'
+    +'<input class="si" id="sq" placeholder="Chercher un album…" value="'+S.q+'"></div>'
+    +'<div class="chs"><button class="ch '+(f?'off':'on')+'" data-f="">Tous</button>'
+    +ths.map(function(t){var c=TC[t]||{c:'#888',e:'📌',l:t};return'<button class="ch '+(f===t?'on':'off')+'" data-f="'+t+'" '+(f===t?'style="background:'+c.c+'"':'')+'>'+c.e+' '+c.l+'</button>'}).join('')+'</div>'
+    +'<div class="grid">'+als.map(function(a){return rCard(a,AL.indexOf(a))}).join('')+'</div>';
+}
+
+// ── Album detail (C1) ────────────────────────────────────────────────────────
+function rA(){
+  var a=AL[S.ai];if(!a)return'';
+  var cats={};a.docs.forEach(function(d){if(!cats[d.c])cats[d.c]=[];cats[d.c].push(d)});
+  var done=a.docs.filter(function(d){return printed.has(a.id+':'+d.f)}).length;
+  var total=a.docs.length;
+  var pct=total?Math.round(done/total*100):0;
+  var isFav=favs.has('al:'+a.id);
+  return'<div class="hdr"><div class="hdr-row"><div>'
+    +'<button class="bk" id="bh">◂ Albums</button>'
+    +'<h1 style="font-size:'+(a.title.length>24?'.95rem':'1.15rem')+'">'+a.title+'</h1>'
+    +'<p style="opacity:.85;font-size:.8rem">'+a.author+'</p>'
+    +'</div><div class="hdr-acts">'
+    +'<button class="ico-btn" id="fav-hdr">'+(isFav?'⭐':'☆')+'</button>'
+    +'<button class="ico-btn" id="set-btn">⚙️</button>'
+    +'</div></div></div>'
+    +'<div class="hr"><span class="em">'+a.emoji+'</span><h2>'+a.title+'</h2>'
+    +'<p style="font-size:.82rem;color:var(--tl);font-weight:600;margin-top:2px">'+a.author+'</p>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:3px;justify-content:center;margin-top:8px">'+a.themes.map(function(t){return bg((TC[t]||{e:'',l:t}).e+' '+(TC[t]||{l:t}).l,(TC[t]||{c:'#888'}).c)}).join('')+a.levels.map(function(l){return bg(l,LC[l]||'#888')}).join('')+'</div>'
+    +'<p style="font-size:.76rem;color:var(--tl);font-weight:600;margin-top:6px" id="prog-lbl">'+done+'/'+total+' fiches imprimées</p>'
+    +'<div style="width:80%;margin:8px auto 0;height:6px;background:rgba(0,0,0,.08);border-radius:6px;overflow:hidden"><div id="prog-bar" style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,#27AE60,#2ECC71);border-radius:6px;transition:width .3s"></div></div>'
+    +'</div>'
+    +'<a class="lnk" href="'+a.page+'" target="_blank">📖 Voir sur Maîtresse Lunicole</a>'
+    +CO.filter(function(c){return cats[c]}).map(function(c){
+      return'<div class="ct">'+(CL[c]||c)+'</div><div class="dl">'
+        +cats[c].map(function(d){
+          var u=a.base+d.f;
+          var ck=printed.has(a.id+':'+d.f);
+          return'<a href="'+u+'" target="_blank" class="dc">'
+            +'<div class="nt"><span>'+(IC[d.c]||'📄')+'</span><span class="lb">'+d.l.replace(/^[^\s]+\s/,'')+'</span></div>'
+            +'<div class="nf"><h3>'+d.l+'</h3><p class="sb">🖨️ Ouvrir & Imprimer</p></div>'
+            +'<button class="ck'+(ck?' done':'')+'" data-dk="'+a.id+':'+d.f+'">'+(ck?'✓':'')+'</button>'
+            +'</a>';
+        }).join('')+'</div>';
+    }).join('')+'<div style="height:60px"></div>';
+}
+
+// ── Event bindings ───────────────────────────────────────────────────────────
+function bindAll(){
+  $('sq')&&$('sq').addEventListener('input',function(e){go({q:e.target.value})});
+  document.querySelectorAll('[data-f]').forEach(function(b){b.onclick=function(){go({f:b.dataset.f===S.f||!b.dataset.f?null:b.dataset.f})}});
+  // Album cards — ignore clicks on fav-btn
+  document.querySelectorAll('[data-ai]').forEach(function(c){c.onclick=function(e){if(e.target.closest('.fav-btn'))return;go({v:'a',ai:+c.dataset.ai})}});
+  // CX resource cards
+  document.querySelectorAll('[data-ri]').forEach(function(c){c.onclick=function(e){if(e.target.closest('.fav-btn'))return;go({ri:+c.dataset.ri})}});
+  // Cycle tabs
+  document.querySelectorAll('[data-cy]').forEach(function(t){t.onclick=function(){go({v:'h',cycle:+t.dataset.cy,ai:null,ri:null,f:null,q:''})}});
+  // Favorites from favs cycle - navigate to correct cycle
+  document.querySelectorAll('[data-ri][data-cy2]').forEach(function(c){c.onclick=function(e){if(e.target.closest('.fav-btn'))return;go({cycle:2,ri:+c.dataset.ri})}});
+  document.querySelectorAll('[data-ri][data-cy3]').forEach(function(c){c.onclick=function(e){if(e.target.closest('.fav-btn'))return;go({cycle:3,ri:+c.dataset.ri})}});
+  // Back buttons
+  $('bh')&&$('bh').addEventListener('click',function(){go({v:'h',ai:null})});
+  $('bx')&&$('bx').addEventListener('click',function(){go({ri:null})});
+  // Settings
+  $('set-btn')&&$('set-btn').addEventListener('click',openSettings);
+  // Fav header button
+  $('fav-hdr')&&$('fav-hdr').addEventListener('click',function(){
+    var id;
+    if(S.v==='a'){id='al:'+(AL[S.ai]&&AL[S.ai].id)}
+    else{var data=S.cycle===2?C2:C3;id='cx:'+(data.items[S.ri]&&data.items[S.ri].id)}
+    if(!id||id.endsWith('undefined'))return;
+    if(favs.has(id))favs.delete(id);else favs.add(id);
+    saveFavs();R();
+  });
+  // Fav buttons on cards
+  document.querySelectorAll('.fav-btn[data-fav]').forEach(function(b){
+    b.onclick=function(e){
+      e.stopPropagation();
+      var id=b.dataset.fav;
+      if(favs.has(id))favs.delete(id);else favs.add(id);
+      saveFavs();
+      b.classList.toggle('on');
+      b.textContent=favs.has(id)?'⭐':'☆';
+      // Refresh tabs to update count
+      var tabs=$('app').querySelector('.tabs');
+      if(tabs){
+        var favTab=tabs.querySelector('[data-cy="9"]');
+        if(favs.size&&!favTab){$('app').querySelector('.tabs').outerHTML=rTabs()}
+        else if(!favs.size&&favTab){favTab.remove()}
+        else if(favTab){favTab.querySelector('span').textContent=favs.size+' épinglé'+(favs.size>1?'s':'')}
+      }
+    };
+  });
+  // Check marks on doc cards
+  document.querySelectorAll('.ck[data-dk]').forEach(function(b){
+    b.onclick=function(e){
+      e.preventDefault();e.stopPropagation();
+      var k=b.dataset.dk;
+      if(printed.has(k))printed.delete(k);else printed.add(k);
+      savePrinted();
+      b.classList.toggle('done',printed.has(k));
+      b.textContent=printed.has(k)?'✓':'';
+      // Update progress
+      var allCks=document.querySelectorAll('.ck[data-dk]');
+      var tot=allCks.length;
+      var dn=[...allCks].filter(function(x){return x.classList.contains('done')}).length;
+      var pct=tot?Math.round(dn/tot*100):0;
+      var bar=$('prog-bar');if(bar)bar.style.width=pct+'%';
+      var lbl=$('prog-lbl');if(lbl)lbl.textContent=dn+'/'+tot+' fiches imprimées';
+    };
+  });
+}
+R();
+
+
+// === MODULE IA - Bibliotheque de Perrine (Claude Sonnet 4) ===
+var aiMessages=[];
+var aiCurrentCtx='albums';
+var aiInitialized=false;
+var aiLoading=false;
+var aiMsgCount=0;
+
+var AI_SYSTEM_PROMPTS={
+  albums:'Tu es une assistante pedagogique specialisee en exploitation d\'albums jeunesse pour la maternelle (PS, MS, GS).\n'
+    +'Tu connais les albums de cette bibliotheque : J\'adore l\'ecole, Je veux pas aller a l\'ecole, Petit Lapin Blanc, Dans la cour de l\'ecole, Non non et non, La course a la pomme, Trognon et Pepin, Le vent m\'a pris, Le voleur de feuilles, La moufle, Les trois ours, Plouk, Les bons amis, Calinours se reveille, C\'est ma fleur, Le lapin de printemps, On a vole le printemps, La brouille, La petite poule rousse, Arc-en-ciel, Les trois petits cochons.\n'
+    +'Tu aides a comprendre les themes et valeurs, preparer des sequences, choisir un album selon la saison ou le theme, proposer des activites de langage oral, de phonologie, de decouverte du monde.\n'
+    +'Reponds de facon chaleureuse, pratique et bienveillante. Utilise des emojis pour rendre la reponse vivante. Parle comme a une collegue enseignante.',
+
+  activites:'Tu es une assistante pedagogique experte en activites de maternelle.\n'
+    +'Tu aides a exploiter les fiches imprimables : puzzles (4, 6, 9 pieces), imagiers vocabulaire, fiches numeration (constellations, chiffres, ecriture), fiches titre (lettres, mots, capitales, cursives), fiches images.\n'
+    +'Tu expliques comment utiliser ces supports en atelier, en groupe, en autonomie, en coin regroupement.\n'
+    +'Tu proposes des variantes selon les niveaux PS/MS/GS.\n'
+    +'Reponds de facon pratique avec des idees concretes et utilisables immediatement.',
+
+  maths:'Tu es une assistante pedagogique specialisee en mathematiques a la maternelle et au cycle 2.\n'
+    +'Tu maitrise la numeration (constellations, denombrement, ecriture chiffree), les puzzles mathematiques, les jeux de tri et classement, les premiers apprentissages du nombre.\n'
+    +'Tu aides a differencier selon le niveau, proposer des situations-problemes, utiliser les fiches (Chiffre 1 a 5, 1 a 9, Ecris 1 a 19).\n'
+    +'Reponds avec des conseils pratiques, des exemples d\'activites et des idees de differenciation.',
+
+  langage:'Tu es une assistante pedagogique specialisee en langage oral et ecrit a la maternelle.\n'
+    +'Tu maitrise le vocabulaire en contexte (imagiers), la conscience phonologique, le principe alphabetique, l\'entree dans l\'ecrit (titre a reformer en lettres ou en mots, titre a reecrire en capitales ou en cursives).\n'
+    +'Tu aides a exploiter les fiches de langage pour structurer des sequences, progresser de PS a GS, differencier.\n'
+    +'Reponds avec des conseils adaptes au developpement langagier de l\'enfant.',
+
+  c2:'Tu es une assistante pedagogique pour le cycle 2 (CP, CE1, CE2).\n'
+    +'Tu connais les ressources : ORTHOQUIZ (quiz d\'orthographe), l\'ordre alphabetique, puzzles mathematiques, anglais, nouveaux programmes 2024 (francais et maths).\n'
+    +'Tu aides avec la lecture, l\'ecriture, la grammaire, les mathematiques, la pedagogie differenciee, les progressions.\n'
+    +'Reponds de facon claire et concrete pour un enseignant de cycle 2.',
+
+  c3:'Tu es une assistante pedagogique pour le cycle 3 (CM1, CM2, 6e).\n'
+    +'Tu connais les ressources : ORTHOQUIZ, les contenances, puzzles maths, enigmes CM1-CM2, anglais, sciences (systeme solaire), EMC (reseaux sociaux), nouveaux programmes 2024.\n'
+    +'Tu aides avec les contenus disciplinaires, la pedagogie, la preparation de sequences, la differenciation.\n'
+    +'Reponds de facon precise et structuree pour un enseignant de cycle 3.',
+
+  parents:'Tu es une assistante bienveillante qui aide les familles a comprendre et utiliser les ressources pedagogiques.\n'
+    +'Tu expliques simplement les activites proposees, comment aider son enfant a la maison, ce que les fiches permettent de travailler.\n'
+    +'Evite le jargon pedagogique, parle avec chaleur et encouragement.\n'
+    +'Reponds de facon accessible, positive et rassurante.'
+};
+
+var AI_QUICK_PROMPTS={
+  albums:['Quel album pour la rentree ?','Albums sur le theme de Noel','Activites autour de La Moufle','Album pour travailler les emotions'],
+  activites:['Comment utiliser les puzzles en atelier ?','Differencier les fiches numeration','Activite avec l\'imagier en GS','Fiche titre : par ou commencer ?'],
+  maths:['Progresser de la constellation au chiffre','Ateliers numeration PS/MS/GS','Differencier Ecris 1-9 et 1-19','Jeu avec les fiches constellation'],
+  langage:['Sequence vocabulaire avec imagier','Phonologie a partir d\'un album','De l\'oral a l\'ecrit en GS','Titre a reformer : quelle progression ?'],
+  c2:['ORTHOQUIZ : comment l\'utiliser ?','Ressources maths cycle 2','Nouveaux programmes 2024 en bref','Anglais CP-CE1 par ou commencer ?'],
+  c3:['Systeme solaire : sequence complete','Enigmes CM : differenciation','EMC reseaux sociaux CM2','Programmes maths C3 2024'],
+  parents:['Comment aider avec les puzzles ?','Fiches numeration a la maison','Mon enfant a du mal avec les chiffres','Lire des albums en famille']
+};
+
+
+// === SYSTEME MOT DE PASSE IA ===
+var AI_PASSWORD = 'bibliotequedeperrine';
+var AI_API_KEY  = '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';
+var aiUnlocked  = false;
+
+function aiShowScreen(){
+  if(!aiUnlocked){
+    document.getElementById('ai-pwd-modal').style.display='flex';
+    setTimeout(function(){var i=document.getElementById('ai-pwd-input');if(i)i.focus();},100);
+    return;
+  }
+  aiShowScreenUnlocked();
+}
+
+function aiCheckPwd(){
+  var inp=document.getElementById('ai-pwd-input');
+  var err=document.getElementById('ai-pwd-err');
+  if(!inp)return;
+  if(inp.value.trim()===AI_PASSWORD){
+    aiUnlocked=true;
+    document.getElementById('ai-pwd-modal').style.display='none';
+    inp.value='';
+    if(err)err.textContent='';
+    aiShowScreenUnlocked();
+  }else{
+    if(err)err.textContent='Mot de passe incorrect. R\u00e9essayez.';
+    inp.value='';
+    inp.focus();
+  }
+}
+
+function aiShowScreenUnlocked(){
+  var app=document.getElementById('app');
+  var scr=document.getElementById('ai-screen');
+  if(app)app.style.display='none';
+  if(scr){
+    scr.style.display='';
+    if(!aiInitialized){
+      aiInitialized=true;
+      aiRenderQuickPrompts('albums');
+      var inp=document.getElementById('ai-input');
+      if(inp){
+        inp.addEventListener('input',function(){
+          this.style.height='auto';
+          this.style.height=Math.min(this.scrollHeight,120)+'px';
+        });
+      }
+    }
+  }
+}
+
+// aiShowScreen defined above with password gate
+
+function aiHideScreen(){
+  var app=document.getElementById('app');
+  var scr=document.getElementById('ai-screen');
+  if(app)app.style.display='';
+  if(scr)scr.style.display='none';
+}
+
+function aiSetCtx(ctx,btn){
+  aiCurrentCtx=ctx;
+  document.querySelectorAll('.ai-ctx-btn').forEach(function(b){b.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+  aiRenderQuickPrompts(ctx);
+}
+
+function aiRenderQuickPrompts(ctx){
+  var bar=document.getElementById('ai-quick-bar');
+  if(!bar)return;
+  var prompts=AI_QUICK_PROMPTS[ctx]||AI_QUICK_PROMPTS.albums;
+  bar.innerHTML=prompts.map(function(p){
+    return '<button class="ai-quick-btn" onclick="aiQuick(this.textContent)">'+p+'</button>';
+  }).join('');
+}
+
+function aiQuick(text){
+  var inp=document.getElementById('ai-input');
+  if(inp){inp.value=text;inp.focus();}
+}
+
+function aiFormatMarkdown(text){
+  return text
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\x60([^\x60]+)\x60/g,'<code>$1</code>')
+    .replace(/^### (.+)$/gm,'<div style="color:var(--ac);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 3px">$1</div>')
+    .replace(/^## (.+)$/gm,'<div style="font-weight:800;margin:8px 0 3px">$1</div>')
+    .replace(/^- (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>.*<\/li>)/gs,'<ul>$1</ul>')
+    .replace(/\n{2,}/g,'<br><br>')
+    .replace(/\n/g,'<br>');
+}
+
+function aiAddMessage(role,content){
+  var box=document.getElementById('ai-messages');
+  if(!box)return;
+  var empty=box.querySelector('.ai-empty');
+  if(empty)empty.remove();
+  var div=document.createElement('div');
+  div.className='ai-msg '+role;
+  var now=new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+  if(role==='user'){
+    div.innerHTML='<div class="ai-bubble-user">'+content.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</div>'
+      +'<div class="ai-meta r">Vous &middot; '+now+'</div>';
+  }else{
+    div.innerHTML='<div class="ai-bubble-assistant">'+aiFormatMarkdown(content)+'</div>'
+      +'<div class="ai-meta">&#10024; Assistante Perrine &middot; '+now+'</div>';
+  }
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+  aiMsgCount++;
+  var usage=document.getElementById('ai-usage');
+  if(usage)usage.textContent='Claude Sonnet 4 \u00b7 '+aiMsgCount+' message'+(aiMsgCount>1?'s':'');
+}
+
+function aiShowThinking(){
+  var box=document.getElementById('ai-messages');
+  if(!box)return;
+  var div=document.createElement('div');
+  div.className='ai-thinking';
+  div.id='ai-thinking-indicator';
+  div.innerHTML='<span></span><span></span><span></span>';
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+}
+
+function aiHideThinking(){
+  var el=document.getElementById('ai-thinking-indicator');
+  if(el)el.remove();
+}
+
+async function aiSend(){
+  if(aiLoading)return;
+  var inp=document.getElementById('ai-input');
+  var btn=document.getElementById('ai-send-btn');
+  if(!inp)return;
+  var text=inp.value.trim();
+  if(!text)return;
+  inp.value='';
+  inp.style.height='auto';
+  aiLoading=true;
+  if(btn)btn.disabled=true;
+  aiAddMessage('user',text);
+  aiMessages.push({role:'user',content:text});
+  aiShowThinking();
+  try{
+    var response=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':AI_API_KEY,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:1000,
+        system:AI_SYSTEM_PROMPTS[aiCurrentCtx]||AI_SYSTEM_PROMPTS.albums,
+        messages:aiMessages.slice(-12)
+      })
+    });
+    var data=await response.json();
+    aiHideThinking();
+    if(data.content&&data.content[0]){
+      var reply=data.content[0].text;
+      aiMessages.push({role:'assistant',content:reply});
+      aiAddMessage('assistant',reply);
+    }else{
+      var errMsg=data.error?data.error.message:JSON.stringify(data);
+      aiAddMessage('assistant','\u26a0\ufe0f Erreur API : '+errMsg);
+    }
+  }catch(err){
+    aiHideThinking();
+    aiAddMessage('assistant','\u26a0\ufe0f Erreur\u00a0: '+err.message);
+  }
+  aiLoading=false;
+  if(btn)btn.disabled=false;
+  inp.focus();
+}
+
+function aiClear(){
+  aiMessages=[];
+  aiMsgCount=0;
+  var box=document.getElementById('ai-messages');
+  if(box)box.innerHTML='<div class="ai-empty"><span class="ai-ei">&#10024;</span><p>Conversation effac\u00e9e.<br>Posez votre question\u00a0!</p></div>';
+  var usage=document.getElementById('ai-usage');
+  if(usage)usage.textContent='Claude Sonnet 4 \u00b7 Anthropic';
+}
+</script>
+
+<div id="ai-screen" style="display:none">
+<div class="ai-screen">
+  <div class="ai-hdr-block">
+    <h2>&#10024; Assistante Perrine</h2>
+    <p>Aide p&#233;dagogique &middot; Albums &middot; Fiches &middot; Maternelle &amp; &#201;l&#233;mentaire</p>
+  </div>
+  <div class="ai-ctx-bar" id="ai-ctx-bar">
+    <button class="ai-ctx-btn on" onclick="aiSetCtx('albums',this)">&#128218; Albums</button>
+    <button class="ai-ctx-btn" onclick="aiSetCtx('activites',this)">&#9986;&#65039; Activit&#233;s</button>
+    <button class="ai-ctx-btn" onclick="aiSetCtx('maths',this)">&#128290; Maths</button>
+    <button class="ai-ctx-btn" onclick="aiSetCtx('langage',this)">&#128292; Langage</button>
+    <button class="ai-ctx-btn" onclick="aiSetCtx('c2',this)">&#128214; Cycle 2</button>
+    <button class="ai-ctx-btn" onclick="aiSetCtx('c3',this)">&#128216; Cycle 3</button>
+    <button class="ai-ctx-btn" onclick="aiSetCtx('parents',this)">&#128106; Familles</button>
+  </div>
+  <div class="ai-quick-bar" id="ai-quick-bar"></div>
+  <div class="ai-messages" id="ai-messages">
+    <div class="ai-empty">
+      <span class="ai-ei">&#10024;</span>
+      <p>Bonjour&#160;! Je suis votre assistante p&#233;dagogique.<br>Choisissez un contexte et posez votre question&#160;!</p>
+    </div>
+  </div>
+  <div class="ai-input-row">
+    <textarea class="ai-input" id="ai-input" rows="1"
+      placeholder="Votre question sur un album, une activit&#233;, une fiche..."
+      onkeydown="if(event.key==='Enter'&amp;&amp;!event.shiftKey){event.preventDefault();aiSend();}"></textarea>
+    <button class="ai-send" id="ai-send-btn" onclick="aiSend()">&#10148;</button>
+  </div>
+  <div class="ai-footer">
+    <span class="ai-usage" id="ai-usage">Claude Sonnet 4 &middot; Anthropic</span>
+    <button class="ai-clear" onclick="aiClear()">&#128465;&#65039; Effacer</button>
+  </div>
+</div>
+</div>
+
+<div id="ai-pwd-modal" class="ai-pwd-modal" style="display:none">
+  <div class="ai-pwd-box">
+    <h3>&#10024; Assistante Perrine</h3>
+    <p>Espace r&#233;serv&#233; aux enseignants.<br>Entrez le mot de passe pour continuer.</p>
+    <input class="ai-pwd-input" id="ai-pwd-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+      onkeydown="if(event.key==='Enter')aiCheckPwd()"
+      autocomplete="off" maxlength="30">
+    <div class="ai-pwd-err" id="ai-pwd-err"></div>
+    <button class="ai-pwd-btn" onclick="aiCheckPwd()">Acc&#233;der &#10148;</button>
+  </div>
+</div>
+</body>
+</html>
